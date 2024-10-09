@@ -6,118 +6,118 @@ from pathlib import Path
 
 
 def avg(par: float):
-	return round(sum(par)/len(par),2)
+    return round(sum(par)/len(par),2)
 
 def print_data(name_val: dict):
 
-	for name, val in sorted(name_val.items()):
-		print(f'{name}: {[min(val), avg(val), max(val)]}')
+    for name, val in sorted(name_val.items()):
+        print(f'{name}: {[min(val), avg(val), max(val)]}')
 
 def logging_data(name_val: dict):
-	logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 
-	for name, val in sorted(name_val.items()):
-		logging.debug(f'{name}: {[min(val), avg(val), max(val)]}')
+    for name, val in sorted(name_val.items()):
+        logging.debug(f'{name}: {[min(val), avg(val), max(val)]}')
 
 
 def read_file_0(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	with path_to_file.open() as file:
-		for line in file:
-			name, val = line.split(';')
+    with path_to_file.open() as file:
+        for line in file:
+            name, val = line.split(';')
 
-			name_val.setdefault(name, []).append(float(val))
-	
-	return name_val
+            name_val.setdefault(name, []).append(float(val))
+    
+    return name_val
 
 def read_file_1(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	with path_to_file.open() as file:
-		for line in file:
-			name, val = line.split(';')
-			try:
-				name_val[name].append(float(val))
-			except KeyError:
-				name_val[name] = [float(val)]
-	return name_val
+    with path_to_file.open() as file:
+        for line in file:
+            name, val = line.split(';')
+            try:
+                name_val[name].append(float(val))
+            except KeyError:
+                name_val[name] = [float(val)]
+    return name_val
 
 def read_file_2(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	with path_to_file.open() as file:
-		for line in file:
-			name, val = line.split(';')
-			if name_val.get(name) is None:
-				name_val[name] = [float(val)]
-			else:
-				name_val[name].append(float(val))
-			
-	return name_val
+    with path_to_file.open() as file:
+        for line in file:
+            name, val = line.split(';')
+            if name_val.get(name) is None:
+                name_val[name] = [float(val)]
+            else:
+                name_val[name].append(float(val))
+            
+    return name_val
 
 
 
 def read_file_3(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	with path_to_file.open() as file:
-		for line in file:
-			name = re.findall(r'(.*)\;', line)[0]
-			val = float(re.findall(r'\;(.*)', line)[0])
-			if name_val.get(name) is None:
-				name_val[name] = [float(val)]
-			else:
-				name_val[name].append(float(val))
-	return name_val
+    with path_to_file.open() as file:
+        for line in file:
+            name = re.findall(r'(.*)\;', line)[0]
+            val = float(re.findall(r'\;(.*)', line)[0])
+            if name_val.get(name) is None:
+                name_val[name] = [float(val)]
+            else:
+                name_val[name].append(float(val))
+    return name_val
 
 
 def read_file_4(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	for line in sorted(path_to_file.read_text().splitlines()):
-		name, val = line.split(';')
-		
-		if name_val.get(name) is None:
-			name_val[name] = [float(val)]
-		else:
-			name_val[name].append(float(val))
-			
-	return name_val
+    for line in sorted(path_to_file.read_text().splitlines()):
+        name, val = line.split(';')
+        
+        if name_val.get(name) is None:
+            name_val[name] = [float(val)]
+        else:
+            name_val[name].append(float(val))
+            
+    return name_val
 
 def read_file_5(path_to_file: Path):
-	name_val = {}
+    name_val = {}
 
-	for line in path_to_file.read_text().splitlines():
-		name, val = line.split(';')
-		
-		if name_val.get(name) is None:
-			name_val[name] = [float(val)]
-		else:
-			name_val[name].append(float(val))
-			
-	return name_val
+    for line in path_to_file.read_text().splitlines():
+        name, val = line.split(';')
+        
+        if name_val.get(name) is None:
+            name_val[name] = [float(val)]
+        else:
+            name_val[name].append(float(val))
+            
+    return name_val
 
 
 if __name__ == '__main__':
 
-	time_start = time.time()
-	path_to_file = Path('C://Users/marius.sutkus.QDTEAM/Documents/training_2/measurements_15.txt')
+    time_start = time.time()
+    path_to_file = Path('C://Users/marius.sutkus.QDTEAM/Documents/training_2/measurements_15.txt')
 
-	name_val = read_file_4(path_to_file=path_to_file)
-	# name_val = cProfile.run('read_file_2(path_to_file=path_to_file)')
+    name_val = read_file_4(path_to_file=path_to_file)
+    # name_val = cProfile.run('read_file_2(path_to_file=path_to_file)')
 
-	read_time = time.time() - time_start
-	if name_val:
-		print_data(name_val)
-	# logging_data(name_val)
-	# print(name_val)
-	time_finish = time.time() - time_start
-	print_time = time_finish - read_time
+    read_time = time.time() - time_start
+    if name_val:
+        print_data(name_val)
+    # logging_data(name_val)
+    # print(name_val)
+    time_finish = time.time() - time_start
+    print_time = time_finish - read_time
 
-	print('finish_time: ', time_finish)
-	print('parsing_time', read_time)
-	print('printing_time', print_time)
+    print('finish_time: ', time_finish)
+    print('parsing_time', read_time)
+    print('printing_time', print_time)
 
 # read_file_2, logging
 # finish_time:  11.324811697006226
